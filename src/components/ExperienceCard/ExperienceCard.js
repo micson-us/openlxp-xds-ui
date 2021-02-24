@@ -22,7 +22,7 @@ const experienceCard = (props) => {
                         <ion-icon name="archive-outline"></ion-icon>
                     </div>
                     <div className="course-highlights">
-                        {props.courseObj.Course. DepartmentName}
+                        {props.courseObj.Course.DepartmentName}
                     </div>
                 </div>
             </div>

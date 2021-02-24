@@ -6,7 +6,7 @@ const landingPage = (props) => {
     const landingHeader = "Enterprise Course Catalog*"
     const landingSubHeader = "This catalog lets you search for all DoD "
         + "unclassified training and education courses, seminars, instructional"
-        + "resources and more."
+        + " resources and more."
     const placeholderText = '';
     const max_cards = 4;
     const dummy_json = [
