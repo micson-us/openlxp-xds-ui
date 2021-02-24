@@ -44,12 +44,16 @@
     padding: 5px;
     /* display: inline; */
     height: 8%;
-    width: 8%;    
+    width: 8%; 
+    height: 90px;   
+    width: 90px;
 }
 
 .div{
     margin-left: 200px;
     display: flex;
+    background-image: url("./dodBanner.png");
+    width: 850px;
 }
 
 .div1 {
