@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import ExperienceCard from '../ExperienceCard/ExperienceCard'
 
-const landingPage = (props) => {
+const LandingPage = (props) => {
+    const [ state, setState] = useState({
+        keyword: ''
+    });
 
     const landingHeader = "Enterprise Course Catalog*"
     const landingSubHeader = "This catalog lets you search for all DoD "
@@ -134,8 +138,18 @@ const landingPage = (props) => {
             <h5>{landingSubHeader}</h5>
             <div className="row">
                 <input className="search" type="text"
-                    placeholder={placeholderText} />
-                <button className="btn" type="button">Search</button>
+                    placeholder={placeholderText} 
+                    value={state.keyword}
+                    onChange={event => {
+                        const newVal = event.target.value;
+                        setState(previousState => ({keyword: newVal}))
+                    }}/>
+                <Link
+                    to={{
+                        pathname: "/search/",
+                        search: "?q=" + state.keyword
+                    }}
+                    className="btn">Search</Link>
             </div>
             <div className="row page-break">
             </div>
@@ -153,4 +167,4 @@ const landingPage = (props) => {
     )
 }
 
-export default landingPage;
+export default LandingPage;
