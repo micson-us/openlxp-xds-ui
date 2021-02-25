@@ -21,12 +21,10 @@ const LandingPage = (props) => {
                 CourseTitle: "VCAT Southeast Asia 1.1 - (6 hrs)",
                 CourseAudience: "WHS and OSD End-Users.",
                 DepartmentName: "Marine Corps",
-                CourseDescription: "Node.js is a server-side framework that uses an \
-                event driven asynchronous model and is built on the Google \
-                Chrome V8 JavaScript runtime engine. This course demonstrates \
-                how to install Node.js, work with Node.js modules, build a \
-                basic web server, and manage files and directories using \
-                Node.js applications.",
+                CourseDescription: "Node.js is a server-side framework that uses an"
+                + "event driven asynchronous model and is built on the Google "
+                + "Chrome V8 JavaScript runtime engine. This course demonstrates"
+                + " Node.js applications.",
                 CourseProviderName: "DAU",
                 EducationalContext: "Mandatory",
                 CourseSectionDeliveryMode: "JKO"
@@ -78,30 +76,10 @@ const LandingPage = (props) => {
                 CourseCode:"EPME6420AA",
                 CourseType:"",
                 CourseTitle:"Oracle GoldenGate 12c: Troubleshooting and Tuning",
-                CourseAudience:"Mortuary Affairs Officers identified by the \
-                    SCJ4 at each of the USSOUTHCOM AOR countries.",
+                CourseAudience:"Mortuary Affairs Officers identified by the",
                 DepartmentName:"USSOUTHCOM",
                 CourseDescription:"The purpose of this course is to provide an "
                     + "entry level (Level 1) hybrid course designed to better "
-                    + "prepare responders for incidents involving weapons of mass "
-                    + "destruction. CBRNE ALERT is an online course that " 
-                    + "includes three introductory courses: Biology, Chemistry,"
-                    + " and Radiology. The biology course describes the "
-                    + "characteristics of living organisms and the different "
-                    + "levels of biological safety as it applies to "
-                    + "microbiology and recombinant DNA laboratories; "
-                    + "differentiating between atoms, molecules, elements, and "
-                    + "compounds and their importance in biologic systems. The "
-                    + "chemistry course focuses on atomic structure; periodic "
-                    + "properties, chemical bonding, chemical structure, "
-                    + "molecular forces, types of chemical reactions, "
-                    + "stoichiometry, chemical kinetics, chemical equilibria, "
-                    + "and acids and bases in relation to CBRN identification "
-                    + "and analysis. The radiology course focuses on defining "
-                    + "basic radiation terms such as alpha, beta, and gamma "
-                    + "rays; describing concepts that affect radiation dose "
-                    + "such as radioactive activity, radiation exposure, dose "
-                    + "equivalence and distinguishing the origin of various "
                     + "sources of radiation emitted from the ground, building "
                     + "materials, water and food, etc.",
                 CourseProviderName:"DAU",
