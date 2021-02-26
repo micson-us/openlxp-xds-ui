@@ -50,16 +50,20 @@
 }
 
 .div{
-    margin-left: 200px;
+    margin-left: 10%;
+    margin-right: 10%;
     display: flex;
     background-image: url("./dodBanner.png");
-    width: 850px;
+    /* width: 850px; */
 }
 
 .div1 {
     overflow:auto;
     display: inline-block;
     height: 70px;
+}
+.div2{
+    margin-left: 35%;
 }
 
 .signIn {
@@ -73,9 +77,10 @@
 }
 
 .search {
-    margin-left: 250px;
+    /* margin-left: 250px; */
     vertical-align: text-top;
     padding-top: 10px;
+    /* float: right; */
 }
 
 .text{

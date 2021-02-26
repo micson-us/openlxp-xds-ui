@@ -11,13 +11,14 @@ function App() {
       {/* <Route path="/search" component={Search} />
       <Route path="/about" component={About} />
       <Route path="/resources" component={Resources} />
-      <Route path="/signIn" exact component={Sign in} />
+      <Route path="/signIn" component={Sign in} 
+      <Route path="/" exact component={Home} />/>
       <Redirect to="/" /> */}
-      <Route path="/home" />
       <Route path="/about" />
       <Route path="/resources"/>
       <Route path="/help"/>
       <Route path="/signIn"/>
+      <Route path="/" exact/>
       <Redirect to="/" />
     </Switch>
   )

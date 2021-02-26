@@ -32,7 +32,7 @@ class Header extends React.Component {
                     <p> <b className={classes.title}>Digital Learning Portal</b> </p>
                     <p> <b className={classes.title1}>U.S. Department of Defense</b> </p>
                 </div>
-                <div>
+                <div className={classes.div2} >
                 <form onSubmit={this.handleSubmit} className={classes.search}>
                     <input className={classes.text} type="text" placeholder= "Keyword search" value={this.state.value} onChange={this.handleChange} />
                     <input className={classes.searchImage} type="image" name="Submit" src={searchButton} alt="Submit" />
