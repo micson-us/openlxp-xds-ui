@@ -5,7 +5,7 @@ const ExpPreviewCard = (props) => {
     return (
         <div className="row exp-panel">
             <div className="col span-1-of-4">
-                <img src={props.expObj.CourseThumbnail} alt="test" />
+                <img src={props.imgLink} alt="test" />
             </div>
             <div className="col span-3-of-4">
                 <div className="row exp-title">

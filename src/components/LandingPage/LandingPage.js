@@ -31,7 +31,7 @@ const LandingPage = (props) => {
                 <Link
                     to={{
                         pathname: "/search/",
-                        search: "?q=" + state.keyword
+                        search: "?kw=" + state.keyword
                     }}
                     className="btn">Search</Link>
             </div>
