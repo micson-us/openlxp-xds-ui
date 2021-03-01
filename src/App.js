@@ -1,14 +1,21 @@
+import React from 'react';
 import './App.css';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import LandingPage from './components/LandingPage/LandingPage';
 import SearchResultPage from './components/SearchResultsPage/SearchResultsPage';
+import { Switch, Route, Redirect } from 'react-router-dom';
+
 
 function App() {
 
   let routes = (
     <Switch>
       <Route path="/search/" component={SearchResultPage} />
+      <Route path="/about" />
+      <Route path="/resources"/>
+      <Route path="/help"/>
+      <Route path="/signIn"/>
       <Route path="/" exact component={LandingPage} />
       <Redirect to="/" />
     </Switch>
