@@ -4,11 +4,14 @@ const experienceCard = (props) => {
 
     return (
         <div className="col span-1-of-4 box">
-        <img src={props.courseObj.CourseThumbnail} alt="test" />
+            <img src={props.courseObj.CourseThumbnail} alt="test" />
             <div className="card-detail">
-                <b><a href="www.google.com">
+                <div className="row card-title">
+                    <b><a href="www.google.com">
                     {props.courseObj.Course.CourseTitle}
                 </a></b>
+                </div>
+                
                 <div className="icon-section">
                     <div className="icon-block">
                         <ion-icon name="business-outline"></ion-icon>
