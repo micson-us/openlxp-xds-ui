@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import LandingPage from './components/LandingPage/LandingPage';
 import SearchResultPage from './components/SearchResultsPage/SearchResultsPage';
-import { Switch, Route, Redirect } from 'react-router-dom';
 
 
 function App() {
