@@ -49,6 +49,10 @@
     width: 90px;
 }
 
+.mainDiv{
+    background-color: white;
+}
+
 .div{
     margin-left: 10%;
     margin-right: 10%;
@@ -63,7 +67,7 @@
     height: 70px;
 }
 .div2{
-    margin-left: 40%;
+    margin-left: 55%;
 }
 
 .signIn {
