@@ -13,7 +13,7 @@ const LandingPage = (props) => {
         + "unclassified training and education courses, seminars, instructional"
         + " resources and more."
     const placeholderText = '';
-    const max_cards = 4;
+    // const max_cards = 4;
     const dummy_json = dummyJSON;
 
     return (

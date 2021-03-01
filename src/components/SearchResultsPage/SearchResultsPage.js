@@ -5,7 +5,7 @@ import axios from 'axios';
 import Loader from "react-loader-spinner";
 import FilterGroup from './FilterGroup/FilterGroup';
 import ExpPreviewPanel from './ExpPreviewPanel/ExpPreviewPanel';
-import dummyJSON from '../../resources/dummy.json';
+// import dummyJSON from '../../resources/dummy.json';
 
 const SearchResultPage = (props) => {
     const [coursesState, setCoursesState] = useState({
@@ -14,7 +14,7 @@ const SearchResultPage = (props) => {
         error: null
     });
 
-    const jsonObj = dummyJSON;
+    // const jsonObj = dummyJSON;
     let location = useLocation();
     const parsedQuery = queryString.parse(location.search);
     console.log(parsedQuery)
@@ -81,31 +81,39 @@ const SearchResultPage = (props) => {
                     }
                 })
             });
-    }, [])
+    }, [url])
 
     if (coursesState.coursesObj && !coursesState.isLoading) {
-        expPanelContent = (
-            coursesState.coursesObjmap((exp, idx) => {
-                if (coursesState.coursesObj[idx] !== null) {
-                    return (
-                        <ExpPreviewPanel
-                            expObj={exp}
-                            key={idx}
-                            imgLink={imgArr[idx]} />
-                    )
-                } else {
-                    return (
-                        <ExpPreviewPanel
-                            expObj={exp}
-                            key={idx}
-                            imgLink={'https://images.pexels.com/photos/'
-                                + '207691/pexels-photo-207691.jpeg?auto='
-                                + 'compress&cs=tinysrgb&dpr=2&h=750&w=1260'}
-                        />
-                    )
-                }
-            })
-        )
+        if (coursesState.coursesObj.total < 1) {
+            expPanelContent = 
+                <h3 className='informational-text'>
+                    Sorry, we couldn't find any results for "{parsedQuery.kw}"
+                </h3>
+        } else {
+            expPanelContent = (
+                coursesState.coursesObj.hits.map((exp, idx) => {
+                    if (coursesState.coursesObj[idx] !== null) {
+                        return (
+                            <ExpPreviewPanel
+                                expObj={exp}
+                                key={idx}
+                                imgLink={imgArr[idx]} />
+                        )
+                    } else {
+                        return (
+                            <ExpPreviewPanel
+                                expObj={exp}
+                                key={idx}
+                                imgLink={'https://images.pexels.com/photos/'
+                                    + '207691/pexels-photo-207691.jpeg?auto='
+                                    + 'compress&cs=tinysrgb&dpr=2&h=750&w=1260'}
+                            />
+                        )
+                    }
+                })
+            )
+        }
+
 
         numResultsContent = (
             <div className="row">
