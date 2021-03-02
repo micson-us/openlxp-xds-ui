@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ExpPreviewCard = (props) => {
+const ExpPreviewPanel = (props) => {
 
     return (
         <div className="row exp-panel">
@@ -25,4 +25,4 @@ const ExpPreviewCard = (props) => {
     )
 }
 
-export default ExpPreviewCard;
+export default ExpPreviewPanel;

@@ -110,7 +110,7 @@ const SearchResultPage = (props) => {
         } else {
             expPanelContent = (
                 coursesState.coursesObj.hits.map((exp, idx) => {
-                    if (coursesState.coursesObj[idx] !== null) {
+                    if (imgArr[idx] !== null && imgArr[idx] !== undefined) {
                         return (
                             <ExpPreviewPanel
                                 expObj={exp}
@@ -118,12 +118,13 @@ const SearchResultPage = (props) => {
                                 imgLink={imgArr[idx]} />
                         )
                     } else {
+                        console.log(idx)
                         return (
                             <ExpPreviewPanel
                                 expObj={exp}
                                 key={idx}
                                 imgLink={'https://images.pexels.com/photos/'
-                                    + '207691/pexels-photo-207691.jpeg?auto='
+                                    + '750913/pexels-photo-750913.jpeg?auto='
                                     + 'compress&cs=tinysrgb&dpr=2&h=750&w=1260'}
                             />
                         )
