@@ -62,9 +62,8 @@
 }
 
 .div1 {
-    overflow:auto;
+    /* overflow:auto; */
     display: inline-block;
-    height: 70px;
 }
 .div2{
     margin-left: 55%;

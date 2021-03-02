@@ -6,7 +6,7 @@
     background-color: #0B3D70;
     background-image: linear-gradient(#2F6194 40%, #0B3D70);
     text-align: left;
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     z-index: 1;
     border: 1px solid #183554;
