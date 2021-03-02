@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import queryString from 'query-string';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
 import FilterGroup from './FilterGroup/FilterGroup';
 import ExpPreviewPanel from './ExpPreviewPanel/ExpPreviewPanel';
 // import dummyJSON from '../../resources/dummy.json';
+
+const getParsedQuery = (location) => {
+    const parsedQuery = queryString.parse(location.search);
+    //console.log(parsedQuery)
+    return parsedQuery.kw
+}
 
 const SearchResultPage = (props) => {
     const [coursesState, setCoursesState] = useState({
@@ -14,12 +20,16 @@ const SearchResultPage = (props) => {
         error: null
     });
 
+
+    const [searchInputState, setSearchInputState] = useState({
+        input: ''
+    });
+
     // const jsonObj = dummyJSON;
     let location = useLocation();
-    const parsedQuery = queryString.parse(location.search);
-    console.log(parsedQuery)
     const api_url = 'http://localhost:8080/es_api/?keyword='
-    const url = api_url + parsedQuery.kw
+    const parsedQuery = getParsedQuery(location);
+    const placeholderText = "Search for anything"
     const filterGroups = [
         {
             title: "Personnel Type",
@@ -47,11 +57,12 @@ const SearchResultPage = (props) => {
     let expPanelContent = null;
     let numResultsContent = (
         <div className="row">
-            <h2>{0 + ' results for "' + parsedQuery.kw + '"'}</h2>
+            <h2>{0 + ' results for "' + parsedQuery + '"'}</h2>
         </div>
     )
 
     useEffect(() => {
+        let url = api_url + parsedQuery;
         setCoursesState(previousState => {
             const resultState = {
                 coursesObj: null,
@@ -81,13 +92,20 @@ const SearchResultPage = (props) => {
                     }
                 })
             });
-    }, [url])
+    }, [location.search])
+
+    useEffect(() => {
+        setSearchInputState(previousState => {
+            //console.log(parsedQuery)
+            return { input: parsedQuery }
+        })
+    }, [])
 
     if (coursesState.coursesObj && !coursesState.isLoading) {
         if (coursesState.coursesObj.total < 1) {
-            expPanelContent = 
+            expPanelContent =
                 <h3 className='informational-text'>
-                    Sorry, we couldn't find any results for "{parsedQuery.kw}"
+                    Sorry, we couldn't find any results for "{parsedQuery}"
                 </h3>
         } else {
             expPanelContent = (
@@ -118,13 +136,18 @@ const SearchResultPage = (props) => {
         numResultsContent = (
             <div className="row">
                 <h2>{coursesState.coursesObj.total +
-                    ' results for "' + parsedQuery.kw + '"'}</h2>
+                    ' results for "' + parsedQuery + '"'}</h2>
             </div>
         )
     } else if (coursesState.error && !coursesState.isLoading) {
-        expPanelContent = <div>Error Loading experiences.</div>
+        expPanelContent =
+            <div className='informational-text'>Error Loading experiences.</div>
     } else {
-        expPanelContent = <div>Loading...</div>
+        expPanelContent = (
+            <div className='spinner-section'>
+                <Loader type="Rings" color="#c7c7c7" height={80} width={80} />
+            </div>
+        )
     }
 
     let mainPageContent = (
@@ -139,6 +162,28 @@ const SearchResultPage = (props) => {
                     })}
                 </div>
                 <div className="col span-4-of-5 results-panel">
+                    <div className="row">
+                        <div className='input-with-icon'>
+                            <input className="search" type="text"
+                            placeholder={placeholderText}
+                            value={searchInputState.input}
+                            onChange={event => {
+                                const newVal = event.target.value;
+                                setSearchInputState(previousState => {
+                                    return { input: newVal }
+                                })
+                            }} />
+                        <Link
+                            to={{
+                                pathname: "/search/",
+                                search: "?kw=" + searchInputState.input
+                            }}
+                            className="btn">
+                                <ion-icon name="search-outline"></ion-icon>
+                            </Link>
+                        </div>
+                        
+                    </div>
                     {expPanelContent}
                 </div>
             </div>
@@ -146,11 +191,10 @@ const SearchResultPage = (props) => {
     )
 
     const overlay = (
-        <div className='content-overlay'>
-            <div className='spinner-section'>
-                <Loader type="Rings" color="#00BFFF" height={80} width={80} />
+        <>
+            <div className='content-overlay'>
             </div>
-        </div>
+        </>
     )
 
     return (
