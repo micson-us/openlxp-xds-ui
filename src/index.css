@@ -20,7 +20,7 @@ body {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Open Sans', 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, 'Lato' 'Open Sans', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -35,4 +35,304 @@ code {
 .main-container {
   width: 100%; 
   height: 100%;
+}
+
+/* ---------------------- */
+/* Shared Components
+/* ---------------------- */
+.box {
+  padding: 1%;
+}
+
+ion-icon {
+  color: #337ab7;
+}
+
+.icon-block {
+  display: inline-block;
+  margin-right: 10px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.icon-section {
+  display: flex;
+  align-items: center;
+}
+
+.content-section {
+  margin: 0 10%;
+}
+
+.content-overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: block; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+
+.spinner-section {
+  margin: 0 50%;
+  position: relative;
+  z-index: 3;
+}
+
+.informational-text {
+  margin: 20px;
+  font-style: italic;
+}
+
+/* ---------------------- */
+/* Landing Page 
+/* ---------------------- */
+.landing-section {
+  margin: 0 10%;
+  background-color: white;
+}
+
+.landing-section h2, h4, h5 {
+  text-align: center;
+  margin: 0 auto 20px;
+}
+
+.landing-section h2 {
+  padding-top: 40px;
+}
+
+.landing-section h5 {
+  width: 60%;
+}
+
+.landing-section .search {
+  font-size: 17px;
+  width: 40%;
+  margin: 0 auto 20px;
+  padding: 5px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border: 1px solid #ccc;
+  display: block;
+}
+
+.landing-section .search:focus {
+  outline: none !important;
+  border:1px solid #1e6ba1;
+}
+
+.landing-section .btn {
+  text-align: center;
+  border-radius: 6px;
+  text-decoration: none;
+  color: white;
+  width: 10%;
+  padding: 2px;
+  background: #005EA2;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: block;
+  margin: 0 auto 10px;
+  font-weight: 500;
+}
+
+.landing-section .btn:hover {
+  background-color: #074979;
+}
+
+.landing-section .page-break {
+  height: 1px;
+  background-color: #c7c7c7;
+  margin: 75px 0;
+}
+
+.card-section {
+  max-width: 1140px;
+  margin: 0 auto 30px auto;
+  position: relative;
+  overflow-x:scroll;
+  overflow-y:hidden;
+  white-space: nowrap;
+}
+
+.card-section .box {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #c7c7c7;
+  padding: 0;
+  float: none;
+  display: inline-block;
+  
+}
+
+/* ---------------------- */
+/* Experience Card
+/* ---------------------- */
+.box img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+  max-height: 179px;
+}
+
+.card-detail {
+  padding: 0 3% 3%;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.card-detail a {
+  font-size: 80%;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.card-detail .card-title {
+  height: 50px;
+}
+
+.card-detail a:link,
+.card-detail a:visited,
+.exp-panel a:link,
+.exp-panel a:visited {
+  text-decoration: none;
+  color: #084476;
+  transition: color 0.2s;
+}
+
+.card-detail a:hover,
+.card-detail a:active,
+.exp-panel a:hover,
+.exp-panel a:active {
+  color: #6b94b8;
+  border-bottom: 1px solid transparent;
+}
+
+.course-highlights {
+  display: inline-block;
+  font-size: 70%;
+}
+
+@media screen and (min-width: 1125px) {
+  .card-detail a {
+    font-size: 70%;
+  }
+}
+
+@media screen and (max-width: 1124px) {
+  .card-detail a {
+    font-size: 60%;
+  }
+}
+
+/* --------------------------- */
+/* Experience Search Results
+/* --------------------------- */
+.filter-panel, .results-panel {
+  background-color: white;
+  font-size: large;
+  border-radius: 10px;
+}
+
+.results-panel div {
+  padding: 0 1% 0 1%;
+}
+
+.filter-panel h3 {
+  margin-bottom: 15px;
+  font-family: 'Arial';
+}
+
+.exp-panel img {
+  width: 100%;
+  height: auto;
+  margin-right: 10px;
+  flex-shrink: 0;
+  min-height: 100%;
+  min-width: 100%;
+  max-height: 200px;
+}
+
+.filter-section {
+  border-bottom: 1px solid #c7c7c7;
+  padding-bottom: 15px;
+  margin: 5%;
+  font-size: 90%;
+  font-family: Arial;
+}
+
+.filter-section label {
+  padding-left: 5px;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+}
+
+.exp-desc {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 90%;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  display: -webkit-box;
+}
+
+.exp-provider {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 60%;
+  margin-top: 8px;
+  color: #8c8c8c;
+}
+
+.exp-panel {
+  margin: 0 10px 5px 10px;
+  border-bottom: 1px solid #c7c7c7;
+}
+
+.exp-panel:last-child {
+  border-bottom: none;
+}
+
+.exp-title {
+  margin-bottom: 8px;
+}
+
+.input-with-icon {
+  margin: 20px auto 30px auto;
+  width: 50%;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border: 1px solid #ccc;
+  display: block;
+}
+
+.input-with-icon input {
+  border: none;
+  width: 90%;
+  padding: 1%;
+  font-size: 100%;
+}
+
+.input-with-icon input:focus {
+  border:none;
+  outline: none;
+}
+
+.input-with-icon .btn {
+  float: right;
+  padding-top: 5px;
+}
+
+.content-section h2 {
+  margin: 5px;
 }

@@ -1,0 +1,41 @@
+.footer {
+    height: 200px;
+    /* width: 1440px; */
+    background-color: #0D3F72;
+    float: bottom;
+    /* margin-top: 100px; */
+}
+
+.text {
+    color: white;
+    text-align: center;
+}
+
+.text1 {
+    color: white;
+    text-align: left;
+}
+
+.text2 {
+    color: white;
+    text-align: left;
+}
+
+.listLinks {
+    list-style-type: none;
+    text-align: left;
+    padding-left: 20px;
+    font-size: 50%;
+}
+
+.links {
+    color: #fff;
+    font-size: 100%;
+}
+
+.listLinks1 {
+    list-style-type: none;
+    text-align: left;
+    padding-left: 20px;
+    font-size: 80%;
+}
