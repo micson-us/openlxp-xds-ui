@@ -2,8 +2,8 @@ import React from 'react';
 import classes from './Header.module.css';
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom'
-import logo from './dodLogo.png';
-import searchButton from './search.svg';
+import logo from '../../resources/internal/dodLogo.png';
+import searchButton from '../../resources/internal/search.svg';
 
 
 const Header = (props) => {
@@ -31,7 +31,7 @@ const Header = (props) => {
                     <Link
                         to={{
                             pathname: "/search/",
-                            search: "?kw=" + state.keyword
+                            search: "?kw=" + state.keyword + "&p=" + 1
                         }}>
                         <input className={classes.searchImage} type="image" name="Submit" src={searchButton} alt="Submit"/>
                         </Link>

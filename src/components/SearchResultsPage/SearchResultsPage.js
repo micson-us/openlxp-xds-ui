@@ -5,6 +5,7 @@ import axios from 'axios';
 import Loader from "react-loader-spinner";
 import FilterGroup from './FilterGroup/FilterGroup';
 import ExpPreviewPanel from './ExpPreviewPanel/ExpPreviewPanel';
+import Pagination from '../Pagination/Pagination';
 // import dummyJSON from '../../resources/dummy.json';
 
 const getParsedQuery = (location) => {
@@ -13,10 +14,17 @@ const getParsedQuery = (location) => {
     return parsedQuery.kw
 }
 
+const getPage = (location) => {
+    const page = queryString.parse(location.search);
+    return page.p
+}
+
 const SearchResultPage = (props) => {
+    
     const [coursesState, setCoursesState] = useState({
         coursesObj: null,
         isLoading: false,
+        page: 1,
         error: null
     });
 
@@ -24,11 +32,12 @@ const SearchResultPage = (props) => {
     const [searchInputState, setSearchInputState] = useState({
         input: ''
     });
-
+    
     // const jsonObj = dummyJSON;
     let location = useLocation();
-    const api_url = 'http://localhost:8080/es_api/?keyword='
+    const api_url = 'http://localhost:8080/es-api/?keyword='
     const parsedQuery = getParsedQuery(location);
+    const pageNum = getPage(location);
     const placeholderText = "Search for anything"
     const filterGroups = [
         {
@@ -62,11 +71,12 @@ const SearchResultPage = (props) => {
     )
 
     useEffect(() => {
-        let url = api_url + parsedQuery;
+        let url = api_url + parsedQuery + "&p=" + pageNum;
         setCoursesState(previousState => {
             const resultState = {
                 coursesObj: null,
                 isLoading: true,
+                page: pageNum,
                 error: null
             }
             return resultState
@@ -78,6 +88,7 @@ const SearchResultPage = (props) => {
                     return {
                         coursesObj: response.data,
                         isLoading: false,
+                        page: pageNum,
                         error: null
                     }
                 });
@@ -88,11 +99,12 @@ const SearchResultPage = (props) => {
                     return {
                         coursesObj: null,
                         isLoading: false,
+                        page: pageNum,
                         error: err
                     }
                 })
             });
-    }, [parsedQuery])
+    }, [parsedQuery,pageNum])
 
     useEffect(() => {
         setSearchInputState(previousState => {
@@ -133,7 +145,6 @@ const SearchResultPage = (props) => {
             )
         }
 
-
         numResultsContent = (
             <div className="row">
                 <h2>{coursesState.coursesObj.total +
@@ -148,6 +159,15 @@ const SearchResultPage = (props) => {
             <div className='spinner-section'>
                 <Loader type="Rings" color="#c7c7c7" height={80} width={80} />
             </div>
+        )
+    }
+    
+    let pagination =  null;
+    if (coursesState.coursesObj && !coursesState.isLoading) {
+        pagination = (
+            <Pagination 
+            courseState={coursesState.coursesObj} page={coursesState.page} searchInputState={searchInputState.input}
+             />
         )
     }
 
@@ -177,7 +197,7 @@ const SearchResultPage = (props) => {
                         <Link
                             to={{
                                 pathname: "/search/",
-                                search: "?kw=" + searchInputState.input
+                                search: "?kw=" + searchInputState.input + "&p=" + 1
                             }}
                             className="btn">
                                 <ion-icon name="search-outline"></ion-icon>
@@ -186,6 +206,7 @@ const SearchResultPage = (props) => {
                         
                     </div>
                     {expPanelContent}
+                    {pagination}
                 </div>
             </div>
         </>
