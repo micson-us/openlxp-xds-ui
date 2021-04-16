@@ -8,6 +8,7 @@ import Loader from "react-loader-spinner";
 import FilterGroup from './FilterGroup/FilterGroup';
 import ExpPreviewPanel from './ExpPreviewPanel/ExpPreviewPanel';
 import Pagination from '../Pagination/Pagination';
+import Select from 'react-select';
 // import dummyJSON from '../../resources/dummy.json';
 
 
@@ -26,6 +27,10 @@ export const getUpdatedSearchQuery = (location, paramObj, isChecked) => {
     for (let paramNm in paramObj) {
         // if it's the page parameter, we just update it to 1
         if (paramNm === 'p') {
+            queryObj[paramNm] = paramObj[paramNm];
+            continue;
+        }
+        if (paramNm === 'sort') {
             queryObj[paramNm] = paramObj[paramNm];
             continue;
         }
@@ -291,6 +296,50 @@ const SearchResultPage = (props) => {
         )
     }
 
+    let options = [{value:"MostRelevant", label: "Most Relevant"} ];
+    if(configuration!= null){
+        for (let param in configuration.search_sort_options) {
+            options.push({value: configuration.search_sort_options[param].field_name, 
+                label: configuration.search_sort_options[param].display_name});
+        }
+    }
+
+    //sort functionality dropdown 
+    let filterDropdown = (
+        <Select options={options} defaultValue={{label: "Most Relevant", value:"MostRelevant"}} 
+        placeholder="Select an option" className='dropdown'
+          onChange={event => {
+            let paramObj  = {};
+            //if sort is not in the url, then it is added 
+            if (paramObj['sort'] === null){
+                const updatedParamObj = getUpdatedSearchQuery(location, paramObj, true);
+                const searchString = getSearchString(updatedParamObj);
+                history.push({
+                    pathname: '/search/',
+                    search: searchString + "&sort=" + event.value
+                });
+            }
+            //if sort is already in the url, replace value 
+            else{
+                if (event.value === "MostRelevant"){
+                    paramObj['sort'] = null;
+                }
+                else{
+                    paramObj['sort'] = event.value;
+                }
+                const updatedParamObj = getUpdatedSearchQuery(location, paramObj, true);
+                const searchString = getSearchString(updatedParamObj);
+                history.push({
+                    pathname: '/search/',
+                    search: searchString
+                });
+            }          
+
+        }}>
+       </Select>
+    )
+
+
     let mainPageContent = (
         <>
             {numResultsContent}
@@ -330,6 +379,7 @@ const SearchResultPage = (props) => {
                         </div>
                         
                     </div>
+                    {filterDropdown}
                     {expPanelContent}
                     {pagination}
                 </div>
