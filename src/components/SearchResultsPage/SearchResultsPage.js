@@ -9,6 +9,7 @@ import FilterGroup from './FilterGroup/FilterGroup';
 import ExpPreviewPanel from './ExpPreviewPanel/ExpPreviewPanel';
 import Pagination from '../Pagination/Pagination';
 import Select from 'react-select';
+import no_img from '../../resources/vendors/img/no-image2.png'
 // import dummyJSON from '../../resources/dummy.json';
 
 
@@ -127,6 +128,7 @@ const SearchResultPage = (props) => {
     const keyword = getKeywordParam(location);
     const pageNum = getPage(location);
     const placeholderText = "Search for anything"
+    const backendHost = process.env.REACT_APP_BACKEND_HOST;
 
     // TODO: remove placeholder images when data comes in with images
     const imgArr = [
@@ -244,23 +246,35 @@ const SearchResultPage = (props) => {
         } else {
             expPanelContent = (
                 coursesState.coursesObj.hits.map((exp, idx) => {
-                    if (imgArr[idx] !== null && imgArr[idx] !== undefined) {
+                    if (exp.Technical_Information 
+                            && exp.Technical_Information.Thumbnail) {
                         return (
                             <ExpPreviewPanel
                                 expObj={exp}
                                 key={idx}
-                                imgLink={imgArr[idx]} />
+                                imgLink={exp.Technical_Information.Thumbnail} />
                         )
                     } else {
-                        return (
-                            <ExpPreviewPanel
-                                expObj={exp}
-                                key={idx}
-                                imgLink={'https://images.pexels.com/photos/'
-                                    + '750913/pexels-photo-750913.jpeg?auto='
-                                    + 'compress&cs=tinysrgb&dpr=2&h=750&w=1260'}
-                            />
-                        )
+                        if (configuration 
+                                && configuration.course_img_fallback) {
+                            return (
+                                <ExpPreviewPanel
+                                    expObj={exp}
+                                    key={idx}
+                                    imgLink={backendHost + 
+                                             configuration.course_img_fallback}
+                                />
+                            )
+                        } else {
+                            return (
+                                <ExpPreviewPanel
+                                    expObj={exp}
+                                    key={idx}
+                                    imgLink={no_img}
+                                />
+                            )
+                        }
+                        
                     }
                 })
             )
@@ -288,7 +302,7 @@ const SearchResultPage = (props) => {
     }
     
     let pagination =  null;
-    if (coursesState.coursesObj && !coursesState.isLoading) {
+    if (coursesState.coursesObj && !coursesState.isLoading && coursesState.coursesObj.total >= 1) {
         pagination = (
             <Pagination 
             courseState={coursesState.coursesObj} page={coursesState.page} searchInputState={searchInputState.input}
@@ -305,39 +319,42 @@ const SearchResultPage = (props) => {
     }
 
     //sort functionality dropdown 
-    let filterDropdown = (
-        <Select options={options} defaultValue={{label: "Most Relevant", value:"MostRelevant"}} 
-        placeholder="Select an option" className='dropdown'
-          onChange={event => {
-            let paramObj  = {};
-            //if sort is not in the url, then it is added 
-            if (paramObj['sort'] === null){
-                const updatedParamObj = getUpdatedSearchQuery(location, paramObj, true);
-                const searchString = getSearchString(updatedParamObj);
-                history.push({
-                    pathname: '/search/',
-                    search: searchString + "&sort=" + event.value
-                });
-            }
-            //if sort is already in the url, replace value 
-            else{
-                if (event.value === "MostRelevant"){
-                    paramObj['sort'] = null;
+    let filterDropdown=  null;
+    if (coursesState.coursesObj != null && coursesState.coursesObj.total > 0){
+        filterDropdown = (
+            <Select options={options} defaultValue={{label: "Most Relevant", value:"MostRelevant"}} 
+            placeholder="Select an option" className='dropdown'
+            onChange={event => {
+                let paramObj  = {};
+                //if sort is not in the url, then it is added 
+                if (paramObj['sort'] === null){
+                    const updatedParamObj = getUpdatedSearchQuery(location, paramObj, true);
+                    const searchString = getSearchString(updatedParamObj);
+                    history.push({
+                        pathname: '/search/',
+                        search: searchString + "&sort=" + event.value
+                    });
                 }
+                //if sort is already in the url, replace value 
                 else{
-                    paramObj['sort'] = event.value;
-                }
-                const updatedParamObj = getUpdatedSearchQuery(location, paramObj, true);
-                const searchString = getSearchString(updatedParamObj);
-                history.push({
-                    pathname: '/search/',
-                    search: searchString
-                });
-            }          
+                    if (event.value === "MostRelevant"){
+                        paramObj['sort'] = null;
+                    }
+                    else{
+                        paramObj['sort'] = event.value;
+                    }
+                    const updatedParamObj = getUpdatedSearchQuery(location, paramObj, true);
+                    const searchString = getSearchString(updatedParamObj);
+                    history.push({
+                        pathname: '/search/',
+                        search: searchString
+                    });
+                }          
 
-        }}>
-       </Select>
-    )
+            }}>
+        </Select>
+        )
+    }
 
 
     let mainPageContent = (

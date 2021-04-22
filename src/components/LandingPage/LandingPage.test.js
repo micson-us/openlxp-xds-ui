@@ -4,6 +4,10 @@ import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+
+import store from '../../store/store';
+
 
 describe('<LandingPage />', () => {
     let container = null;
@@ -19,13 +23,15 @@ describe('<LandingPage />', () => {
         container = null;
     })
 
-    it("should display: header, subheader, and popular section", () => {
+    it("should display: header, subheader, and spotlight section", () => {
 
         act(() => {
             render(
-                <MemoryRouter>
-                    <LandingPage />
-                </MemoryRouter>
+                <Provider store={store}>
+                    <MemoryRouter>
+                        <LandingPage />
+                    </MemoryRouter>
+                </Provider>
             , container);
         })
 
@@ -35,7 +41,7 @@ describe('<LandingPage />', () => {
             + "unclassified training and education courses, seminars, "
             + "instructional resources and more."))
             .toBeInTheDocument();
-        expect(screen.getByText("Popular"))
+        expect(screen.getByText("Spotlight"))
             .toBeInTheDocument();
     })
 
@@ -43,9 +49,11 @@ describe('<LandingPage />', () => {
 
         act(() => {
             render(
-                <MemoryRouter>
-                    <LandingPage />
-                </MemoryRouter>
+                <Provider store={store}>
+                    <MemoryRouter>
+                        <LandingPage />
+                    </MemoryRouter>
+                </Provider>
             , container);
         });
 
