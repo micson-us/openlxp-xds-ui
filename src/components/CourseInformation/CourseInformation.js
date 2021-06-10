@@ -12,8 +12,8 @@ import RelatedCourses from "./RelatedCourses/RelatedCourses";
 const CourseInformation = (props) => {
   // Getting the current location and the data
   const location = useLocation();
-  const courseData = location.state.expObj;
   const imgLink = location.state.imgLink;
+  const courseData = location.state.expObj;
 
   // The base url for the back end
   const api_url = process.env.REACT_APP_ES_MLT_API;
@@ -66,7 +66,8 @@ const CourseInformation = (props) => {
     icons[name] ? icons[name] : icons["calendar"];
 
   // Return the value of specific detail.
-  const getCourseDetailValue = (strKey, data) => {
+
+  const getCourseDataMapping = (strKey, data) => {
     // gets the keys for the data mapping
     const objKeys = strKey.split(".");
 
@@ -83,41 +84,57 @@ const CourseInformation = (props) => {
     return valueToReturn;
   };
 
-  // Get the icon to render
-  let courseDetails = null;
-  if (configuration != null) {
+  // Get the global config
+  // const { configuration } = useSelector((state) => state.configuration);
+
+  let courseInfo = {};
+  let courseDetails = undefined;
+
+  // Wait for the configuration to be available.
+  if (configuration) {
+    // Get the icon to render
     courseDetails = configuration.course_highlights.map((item, index) => {
       return {
         icon: getIconNameToUse(item.highlight_icon),
         name: item.display_name,
-        value: getCourseDetailValue(item.field_name, courseData) || "",
+        value: getCourseDataMapping(item.field_name, courseData) || "",
       };
     });
+
+    // gets the course information mappings
+    const courseDataMappings = configuration.course_information;
+    courseInfo = {
+      title: getCourseDataMapping(courseDataMappings.course_title, courseData),
+      url: getCourseDataMapping(courseDataMappings.course_url, courseData),
+      desc: getCourseDataMapping(
+        courseDataMappings.course_description,
+        courseData
+      ),
+    };
   }
+
   return (
     <div className="content-section">
       <div className="row content-panel course-detail">
         <div className="inner-content">
-          <h4>{courseData.Course.CourseTitle}</h4>
-
+          <h4>{courseInfo.title}</h4>
           <div className="row">
             <div className="col span-2-of-5">
               <CourseImage img={imgLink} />
-              <CourseButton url={"#"} />
+              <CourseButton url={courseInfo.url} />
             </div>
             <div className="col span-3-of-5">
               <CourseDetails details={courseDetails} />
             </div>
           </div>
-
-          <CourseDescription desc={courseData.Course.CourseDescription} />
+          <CourseDescription desc={courseInfo.desc} />
         </div>
+        {relatedCourses.data ? (
+          <RelatedCourses data={relatedCourses.data} /> // If the data is not there
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
-      {relatedCourses.data ? (
-        <RelatedCourses data={relatedCourses.data} /> // If the data is not there
-      ) : (
-        <div>Loading...</div>
-      )}
     </div>
   );
 };
