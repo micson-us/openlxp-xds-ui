@@ -3,7 +3,7 @@ import classes from './Header.module.css';
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import logo from '../../resources/internal/dodLogo.png';
-import searchButton from '../../resources/internal/search.svg';
+// import searchButton from '../../resources/internal/search.svg';
 
 
 const Header = (props) => {
@@ -23,7 +23,7 @@ const Header = (props) => {
                 <div className={classes.topLeft}>
                     <NavLink to='/signIn' className={classes.signIn}>Sign in</NavLink>
                     <div className={classes.inputwithicon}>
-                        <input className={classes.text} type="text" placeholder="Keyword search" value={state.keyword}
+                        <input className={classes.text} type="text" aria-label="search" placeholder="Keyword search" value={state.keyword} data-testid="header-search"
                             onChange={event => {
                                 const newVal = event.target.value;
                                 setState(previousState => ({keyword: newVal}))
