@@ -72,7 +72,21 @@ jest.mock("axios");
 
 describe("CourseInformation", () => {
     it("should render course when given data", async () => {
-        let data = {
+        let courseData = {
+            Course: {
+                CourseTitle: "Title1",
+                CourseProviderName: "Provider1",
+                DepartmentName: "Department1",
+            },
+            Technical_Information: {
+                Thumbnail: "Test",
+            },
+            meta: {
+                id: "1",
+                metadata_key_hash: "abc"
+            },
+        }
+        let relatedData = {
             hits: [
                 {
                     Course: {
@@ -93,8 +107,9 @@ describe("CourseInformation", () => {
             ],
             total: 1,
         };
-        const resp = { data: data };
+        const resp = { data: relatedData };
         useSelectorMock.mockReturnValue(state);
+        axios.get.mockResolvedValueOnce({ data: courseData });
         axios.get.mockResolvedValueOnce(resp);
 
         await act(async () => {
@@ -102,8 +117,7 @@ describe("CourseInformation", () => {
                 <Provider store={store}>
                     <StaticRouter
                         location={{
-                            pathname: "/course",
-                            state: { expObj: data.hits[0] },
+                            pathname: "/course/1234",
                         }}
                     >
                         <CourseInformation />

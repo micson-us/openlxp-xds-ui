@@ -22,7 +22,7 @@ function App() {
       <Route path="/resources" />
       <Route path="/help" />
       <Route path="/signIn" component={SignIn}/>
-      <Route path="/course" component={CourseInformation} />
+      <Route path="/course/:courseID" component={CourseInformation} />
       <Route path="/" exact component={LandingPage} />
       <Route path="/Signup" component={SignUp} />
       <Redirect to="/" />
