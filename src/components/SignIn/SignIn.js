@@ -10,6 +10,7 @@ import Button from "../common/inputs/Button";
 import PageWrapper from "../common/PageWrapper";
 import ErrorMessage from "../common/messages/ErrorMessage";
 import DefaultInput from "../common/inputs/DefaultInput";
+import { getUserLists } from "../../store/lists";
 
 const SignIn = (props) => {
   const { user, status, error } = useSelector((state) => state.user);
@@ -81,6 +82,7 @@ const SignIn = (props) => {
     }
     // if the user is logged in navigate them away from here.
     if (user) {
+      dispatch(getUserLists(user.token));
       history.push("/");
     }
   }, [credentials, user, error]);
@@ -98,10 +100,10 @@ const SignIn = (props) => {
         </h2>
         <div className="mt-2 mx-auto font-medium text-sm flex flex-row">
           or&nbsp;
-          <a href="#"
+          <a
+            href="#"
             onClick={handleSignup}
-            className="text-base-blue hover:text-bright-blue"
-          >
+            className="text-base-blue hover:text-bright-blue">
             Create an account
           </a>
         </div>
@@ -110,13 +112,11 @@ const SignIn = (props) => {
           <form
             action="#"
             className="space-y-6 text-left"
-            onKeyPress={handleEnterKey}
-          >
+            onKeyPress={handleEnterKey}>
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+                className="block text-sm font-medium text-gray-700">
                 Email
               </label>
               <DefaultInput
@@ -132,8 +132,7 @@ const SignIn = (props) => {
             <div>
               <label
                 htmlFor="Password"
-                className="block text-sm font-medium text-gray-700"
-              >
+                className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <DefaultInput
@@ -152,11 +151,19 @@ const SignIn = (props) => {
                 Forgot password?
               </div>
             </div>
-            <Button
-              className="w-full py-2 font-semibold"
-              onClick={handleSubmit}
-              title="Login"
-            />
+            {status === "loading" ? (
+              <div className="w-full bg-base-blue h-10 rounded-md flex justify-center items-center text-white">
+                <div className="flex justify-center items-center animate-spin">
+                  <ion-icon name="reload-outline"></ion-icon>
+                </div>
+              </div>
+            ) : (
+              <Button
+                className="w-full py-2 font-semibold"
+                onClick={handleSubmit}
+                title="Login"
+              />
+            )}
           </form>
         </div>
       </div>
