@@ -1,20 +1,14 @@
-import classes from "../CourseInformation.module.css";
-
-const CourseImage = (props) => {
-  const img = props.img;
-
-  if (!img) {
+const CourseImage = ({ image }) => {
+  if (!image) {
     return (
       <div
         data-testid="image"
-        className={
-          "w-64 h-32 bg-gradient-to-br from-base-blue to-dark-blue rounded-md"
-        }
+        className="w-64 h-32 mt-1.5 bg-gradient-to-br from-base-blue to-dark-blue rounded-md"
       />
     );
   }
-
-  return <img className="rounded-sm" src={img} alt={"Course"} />;
+  return <img className="rounded-sm w-64 h-32 mt-1.5" src={image}
+              alt={"Course"}/>;
 };
 
 export default CourseImage;
