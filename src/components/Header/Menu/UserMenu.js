@@ -5,15 +5,14 @@ const UserMenu = (props) => {
   const menuItems = props.menuItems || [];
   const menuButtons = menuItems.map((item, index) => {
     return (
-      <Menu.Item>
+      <Menu.Item key={index}>
         {({ active }) => (
           <div
             onClick={item.func}
             className={`${
               active ? "bg-base-blue text-white" : "bg-white text-gray-900"
-            } w-full pl-2 py-2 rounded-md cursor-pointer`}
-          >
-            {item.title}
+            } w-full pl-2 py-2 rounded-md cursor-pointer`}>
+            {item?.title}
           </div>
         )}
       </Menu.Item>
@@ -21,10 +20,10 @@ const UserMenu = (props) => {
   });
 
   return (
-    <div className=" text-right  top-16">
+    <div className=" text-right  top-16 z-50">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-base-blue hover:bg-dark-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md bg-base-blue hover:bg-dark-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             <div className="flex flex-row items-center space-x-2">
               <div>{props.username}</div>
 

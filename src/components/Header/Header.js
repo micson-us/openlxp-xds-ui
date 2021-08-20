@@ -31,11 +31,35 @@ const Header = () => {
     },
     { title: "Profile", url: "/", icon: "" },
     {
+      title: "Search Interest Lists",
+      url: "/searchinterestlists",
+      icon: "",
+      func: () => {
+        history.push("/searchinterestlists");
+      },
+    },
+    {
+      title: "Manage Subscriptions",
+      url: "/",
+      icon: "",
+      func: () => {
+        history.push("/managesubscriptions");
+      },
+    },
+    {
       title: "Manage Interests",
       url: "/",
       icon: "",
       func: () => {
         history.push("/manageinterestlists");
+      },
+    },
+    {
+      title: "Filter Search",
+      url: "/",
+      icon: "",
+      func: () => {
+        history.push("/filter-search");
       },
     },
     { title: "Favorites", url: "/", icon: "" },

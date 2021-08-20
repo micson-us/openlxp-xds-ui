@@ -14,6 +14,9 @@ import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import { setUserStatus } from "./store/user";
 import axios from "axios";
+import SearchInterestLists from "./components/SearchInterestLists/SearchInterestLists";
+import FilterSearch from "./components/FilterSearch/FilterSearch";
+import ManageSubscriptions from "./components/ManageSubscriptions/ManageSubscriptions";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,7 +29,10 @@ function App() {
       <Route path="/about" />
       <Route path="/resources" />
       <Route path="/manageinterestlists" component={ManageInterestlists} />
+      <Route path="/managesubscriptions" component={ManageSubscriptions} />
       <Route path="/help" />
+      <Route path="/filter-search/" component={FilterSearch} />
+      <Route path="/searchinterestlists/" component={SearchInterestLists} />
       <Route path="/signIn" component={SignIn} />
       <Route path="/course/:id" component={CourseInformation} />
       <Route path="/" exact component={LandingPage} />
@@ -47,7 +53,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      const url = process.env.REACT_APP_INTEREST_LISTS;
+      const url = process.env.REACT_APP_USER_INTEREST_LISTS;
       // validate with back end
       axios
         .get(url, {
@@ -58,7 +64,7 @@ function App() {
           localStorage.removeItem("state");
         });
     }
-  },[user]);
+  }, [user]);
 
   return (
     <div className="main-container">

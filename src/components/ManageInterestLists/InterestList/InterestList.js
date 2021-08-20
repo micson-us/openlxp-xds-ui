@@ -27,12 +27,20 @@ const InterestList = (props) => {
     };
 
     axios
-      .patch(`${process.env.REACT_APP_INTEREST_LISTS}${list.id}`, objToSend, {
-        headers: {
-          Authorization: "Token " + user.token,
-        },
-      })
+      .patch(
+        `${process.env.REACT_APP_INTEREST_LISTS_ALL}${list.id}`,
+        objToSend,
+        {
+          headers: {
+            Authorization: "Token " + user.token,
+          },
+        }
+      )
       .then((response) => {
+        dispatch(getUserLists());
+      })
+      .catch((err) => {
+        console.log(err);
         dispatch(getUserLists());
       });
 
@@ -49,7 +57,6 @@ const InterestList = (props) => {
   };
   // remove a course from the list
   const handleRemoveCourse = (hashId) => {
-    console.log("test");
     const filteredCourses = courseList.filter(
       (course) => course.meta.metadata_key_hash !== hashId
     );
@@ -59,6 +66,17 @@ const InterestList = (props) => {
 
   // get the list id and remove it
   const handleDeleteList = () => {
+    const url = process.env.REACT_APP_INTEREST_LISTS_ALL + list.id;
+    axios
+      .delete(url, { headers: { Authorization: "token " + user.token } })
+      .then((resp) => {
+        console.log(resp);
+        dispatch(getUserLists());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     console.log("delete", list);
   };
 
@@ -66,10 +84,9 @@ const InterestList = (props) => {
   useEffect(() => {
     if (list.id) {
       axios
-        .get(
-          `${process.env.REACT_APP_INTEREST_LISTS}${list.id}`,
-          { headers: { Authorization: "token " + user.token } }
-        )
+        .get(`${process.env.REACT_APP_INTEREST_LISTS_ALL}${list.id}`, {
+          headers: { Authorization: "token " + user.token },
+        })
         .then((response) => {
           console.log(response.data);
           setCourseList(response.data.experiences);
@@ -84,7 +101,7 @@ const InterestList = (props) => {
           className={`${
             open ? "shadow-md" : "border"
           } px-4 py-2 rounded-md my-4`}>
-          <Disclosure.Button className="w-full text-left flex flex-row items-center justify-between py-2">
+          <Disclosure.Button className="w-full text-left flex flex-row items-center justify-between py-2 z-0">
             <div>{list.name}</div>
             {open ? (
               <ion-icon name="chevron-up-outline" />
@@ -104,7 +121,7 @@ const InterestList = (props) => {
                           setEditing(false);
                           dispatch(getUserLists(user?.token));
                         }}
-                        className="flex flex-row items-center space-x-2 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded-md px-2 py-1 cursor-pointer transition-all duration-200 ease-in-out py-2 ">
+                        className="flex flex-row items-center space-x-2 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded-md px-2 py-1 cursor-pointer transition-all duration-200 ease-in-out">
                         <ion-icon name="arrow-undo-outline"></ion-icon>
                       </div>
                       <div
@@ -219,7 +236,7 @@ const InterestList = (props) => {
                   </thead>
                   <tbody className="space-y-2">
                     {courseList?.map((course, index) => {
-                      const courseData = { ...course.Metadata_Ledger.Course };
+                      const courseData = { ...course.Course };
                       const courseHash = course.meta.metadata_key_hash;
                       return (
                         <tr
