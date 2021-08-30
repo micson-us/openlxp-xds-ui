@@ -5,18 +5,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchConfiguration } from "./store/configuration";
 
 import Layout from "./hoc/Layout/Layout";
-import LandingPage from "./components/LandingPage/LandingPage";
-import SearchResultPage from "./components/SearchResultsPage/SearchResultsPage";
-import CourseInformation from "./components/CourseInformation/CourseInformation";
-import ManageInterestlists from "./components/ManageInterestLists/ManageInterestLists";
+import Home from "./pages/Home";
 
-import SignIn from "./components/SignIn/SignIn";
-import SignUp from "./components/SignUp/SignUp";
+import ManageInterestLists from "./pages/ManageInterestsLists";
+
 import { setUserStatus } from "./store/user";
 import axios from "axios";
-import SearchInterestLists from "./components/SearchInterestLists/SearchInterestLists";
-import FilterSearch from "./components/FilterSearch/FilterSearch";
-import ManageSubscriptions from "./components/ManageSubscriptions/ManageSubscriptions";
+import SearchInterestLists from "./pages/SearchInterestLists";
+import FilterSearch from "./pages/FilterSearch";
+import ManageSubscriptions from "./pages/ManageSubscriptions";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Course from "./pages/Course";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,18 +26,25 @@ function App() {
 
   let routes = (
     <Switch>
-      <Route path="/search/" component={SearchResultPage} />
+      <Route path="/" exact component={Home} />
+      <Route path="/search/" component={SearchResults} />
       <Route path="/about" />
       <Route path="/resources" />
-      <Route path="/manageinterestlists" component={ManageInterestlists} />
-      <Route path="/managesubscriptions" component={ManageSubscriptions} />
       <Route path="/help" />
-      <Route path="/filter-search/" component={FilterSearch} />
-      <Route path="/searchinterestlists/" component={SearchInterestLists} />
-      <Route path="/signIn" component={SignIn} />
-      <Route path="/course/:id" component={CourseInformation} />
-      <Route path="/" exact component={LandingPage} />
-      <Route path="/signup" component={SignUp} />
+      <Route path="/course/:id" component={Course} />
+      {!user && <Route path="/signIn" component={Login} />}
+      {!user && <Route path="/signUp" component={Register} />}
+      {user && <Route path="/filter-search" component={FilterSearch} />}
+      {user && (
+        <Route path="/manageinterestlists" component={ManageInterestLists} />
+      )}
+      {user && (
+        <Route path="/managesubscriptions" component={ManageSubscriptions} />
+      )}
+      {user && <Route path="/filter-search/" component={FilterSearch} />}
+      {user && (
+        <Route path="/searchinterestlists/" component={SearchInterestLists} />
+      )}
       <Redirect to="/" />
     </Switch>
   );
