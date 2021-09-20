@@ -18,6 +18,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Course from "./pages/Course";
 import SearchResults from "./pages/SearchResults";
+import ManageSavedSearches from "./pages/ManageSavedSearches";
+import EditSavedSearch from "./pages/EditSavedSearch";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,9 +34,11 @@ function App() {
       <Route path="/resources" />
       <Route path="/help" />
       <Route path="/course/:id" component={Course} />
+      {/* <Route path="/filter-search" component={FilterSearch} /> */}
+      <Route path="/filter-search" component={EditSavedSearch} />
+      {user && <Route path="/saved-searches" component={ManageSavedSearches} />}
       {!user && <Route path="/signIn" component={Login} />}
       {!user && <Route path="/signUp" component={Register} />}
-      {user && <Route path="/filter-search" component={FilterSearch} />}
       {user && (
         <Route path="/manageinterestlists" component={ManageInterestLists} />
       )}
@@ -60,14 +64,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      const url = process.env.REACT_APP_USER_INTEREST_LISTS;
+    if (user?.token) {
+      const url = process.env.REACT_APP_USER_SUBSCRIPTION_LISTS;
       // validate with back end
       axios
         .get(url, {
-          headers: { Authorization: `Token ${user.token}` },
+          headers: { Authorization: `Token ${user?.token}` },
         })
-        .then()
         .catch(() => {
           localStorage.removeItem("state");
         });
