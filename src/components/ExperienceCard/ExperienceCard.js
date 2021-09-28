@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { backendHost } from "../../config/config";
 
 const ExperienceCard = (props) => {
   let result = (
@@ -10,24 +11,19 @@ const ExperienceCard = (props) => {
   let courseThumbnail;
   // courseThumbnail = no_img;
   const { configuration } = useSelector((state) => state.configuration);
-  const backendHost = process.env.REACT_APP_BACKEND_HOST;
   // default style if no image is provided
   let style = {
     backgroundColor: "rgb(243 243 243)",
   };
 
   // if configuration is loaded and there is an image fallback, use that
-  if (configuration && configuration.course_img_fallback) {
+  if (configuration?.course_img_fallback) {
     courseThumbnail = backendHost + configuration.course_img_fallback;
     style = null;
   }
 
   // override the default img if one is passed in
-  if (
-    props.courseObj &&
-    props.courseObj.Technical_Information &&
-    props.courseObj.Technical_Information.Thumbnail
-  ) {
+  if (props.courseObj?.Technical_Information?.Thumbnail) {
     courseThumbnail = props.courseObj.Technical_Information.Thumbnail;
     style = null;
   }
@@ -64,7 +60,10 @@ const ExperienceCard = (props) => {
             <b>
               <Link
                 to={{
-                  pathname: "/course/" + props.courseObj.meta?.id,
+                  pathname:
+                    "/course/" +
+                    (props.courseObj?.meta?.metadata_key_hash ||
+                      props.courseObj.meta?.id),
                   state: {
                     expObj: props.courseObj,
                     imgLink: courseThumbnail,
